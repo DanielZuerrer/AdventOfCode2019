@@ -17,9 +17,7 @@ instruction_pointer = 0
 while (True):
     instruction = instructions[memory[instruction_pointer]]
 
-    if (instruction == 'terminate'):
-        print(f'Result: {memory[0]}')
-        exit()
+    if (instruction == 'terminate'): break
 
     param_1_address = memory[instruction_pointer + 1]
     param_2_address = memory[instruction_pointer + 2]
@@ -27,3 +25,5 @@ while (True):
 
     memory[result_address] = instruction(memory[param_1_address], memory[param_2_address])
     instruction_pointer += 4
+
+print(f'Result: {memory[0]}')
