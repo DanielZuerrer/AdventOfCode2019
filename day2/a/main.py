@@ -1,4 +1,4 @@
-operations = {
+instructions = {
     1: lambda x, y: x + y,
     2: lambda x, y: x * y,
     99: 'terminate'
@@ -7,23 +7,23 @@ operations = {
 with open('input.txt') as input_file:
     input = input_file.readline()
 
-intcode = [int(i) for i in input.split(",")]
+memory = [int(i) for i in input.split(",")]
 
 # before running the program, replace position 1 with the value 12 and replace position 2 with the value 2
-intcode[1] = 12
-intcode[2] = 2
+memory[1] = 12
+memory[2] = 2
 
-program_pointer = 0
+instruction_pointer = 0
 while (True):
-    operation = operations[intcode[program_pointer]]
+    instruction = instructions[memory[instruction_pointer]]
 
-    if (operation == 'terminate'):
-        print(f'Result: {intcode[0]}')
+    if (instruction == 'terminate'):
+        print(f'Result: {memory[0]}')
         exit()
 
-    arg_1_pos = intcode[program_pointer + 1]
-    arg_2_pos = intcode[program_pointer + 2]
-    result_pos = intcode[program_pointer + 3]
+    param_1_address = memory[instruction_pointer + 1]
+    param_2_address = memory[instruction_pointer + 2]
+    result_address = memory[instruction_pointer + 3]
 
-    intcode[result_pos] = operation(intcode[arg_1_pos], intcode[arg_2_pos])
-    program_pointer += 4
+    memory[result_address] = instruction(memory[param_1_address], memory[param_2_address])
+    instruction_pointer += 4
